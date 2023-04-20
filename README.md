@@ -1,9 +1,12 @@
 # Intrinsically motivated Prospect Theory RL-agent
 
-Senior Thesis Project at Princeton. I am currently working on developing a reinforcement learning agent with an adjusted reward function such that $r_t = w_1 \cdot r_t + (r_t - \rho)$ where $\rho$ is the "aspiration" of the agent – the reward the agent expects to achieve in order to be minimally satisfied. The agent will learn to set the optimal value of $\rho$ via meta-learning which will be implemented with a PyTorch optimizer. This work extends a paper produced by the Computational Cognitive Science lab at Princeton which showed that the maximum average cumulative reward achieved over multiple episodes in a grid world environment was achieved with a value of $\rho > 0$, providing inspiration for this work. 
+Senior Thesis Project at Princeton. This thesis builds on the work of Dubey et al. by exploring the effect of reward shaping in  RL to investigate what forms of intrinsic motivation are most beneficial to an agent's performance in different environments. By testing two reward functions based on Dubey et al.’s aspiration model and a new reward function based on Kahneman and Tversky’s Prospect Theory, \cite{21} \cite{24} this work illustrates that a Prospect Theory value function is a good form of intrinsic motivation to use, especially in sparse environments.  The training process consists of three main steps. First, the parameters of the reward functions are tuned with Bayesian optimization applied to a Q-learning agent which learns a policy in simulated, grid-world environments similar to the ones used in Dubey et al. \cite{1}. Next, the optimized values are used to test the aspiration and Prospect Theory reward functions on Q-learning agents in the same environments. Finally, the performance of each model is evaluated by comparing the average cumulative reward obtained over 50 runs of 1000 episodes to the reward obtained by a regular $\epsilon$-greedy RL model with the same learning rate and discount factor.
 
 $$V(x) = \begin{cases} x^\alpha & \text{if } x \geq 0  & \\
 -\lambda(-x)^\beta & \text{if } x < 0 \end{cases}$$
+
+
+ $$r_t = w_1 \cdot r_t + (r_t - \rho)$$
 
 
 **GridWorld** class: contains the grid-world environment with methods for taking a step in the environment, getting available actions and rewards, checking if a state is terminal and printing the agent on the map.    
